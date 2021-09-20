@@ -4,6 +4,7 @@ const router = Router();
 const {getProducts, createProducts} = require('../controllers/productosController')
 const {getRoles, createRoles} = require('../controllers/rolesController')
 const {getUsers, createUsers, addRole, deletedUser} = require('../controllers/usersController')
+const {getSales, createSales, updateSale, deletedSale} = require('../controllers/salesController')
 
 //products
 router.get('/products', getProducts);
@@ -16,5 +17,10 @@ router.get('/users', getUsers);
 router.post('/users', createUsers);
 router.put('/users/:id/add-role', addRole);
 router.delete('/users/:id/delete', deletedUser);
+//sales
+router.get('/sales', getSales);
+router.post('/sales', createSales);
+router.put('/sales/:id/update', updateSale);
+router.delete('/sales/:id/delete', deletedSale);
 
 module.exports = router;
