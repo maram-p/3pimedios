@@ -1,6 +1,7 @@
 const {v4} = require('uuid')
 const {pool} = require('../database/conection')
 
+
 const getSales = async (req, res) => {
     const sales = await pool.query('SELECT * FROM sales');
     res.status(200).json(sales.rows);
