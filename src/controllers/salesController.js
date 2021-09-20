@@ -1,9 +1,50 @@
 const {v4} = require('uuid')
 const {pool} = require('../database/conection')
 
+
 const getSales = async (req, res) => {
     const sales = await pool.query('SELECT * FROM sales');
     res.status(200).json(sales.rows);
+}
+
+const getSalesToDate = async (req, res) => {
+    const {date} = req.params;
+
+    const dateStart = date+' 00:00:00';
+    const dateFinish = date+' 23:59:59';
+    
+    const sales = await pool.query('SELECT products_id, qty FROM sales where sale_at BETWEEN $1 AND $2',[dateStart, dateFinish]);
+
+    let acum = 0;
+    for (const sale of sales.rows) {
+        const product = await pool.query('SELECT price FROM products where id = $1',[sale.products_id]);
+        acum += parseInt(product.rows[0].price * sale.qty)
+    }
+    console.log(acum);
+    res.status(200).json({
+        date,
+        total: acum
+    });
+}
+
+const getSalesToMonth = async (req, res) => {
+    const {date} = req.params;
+
+    const dateStart = date+'-01 00:00:00';
+    const dateFinish = date+'-30 23:59:59';
+    
+    const sales = await pool.query('SELECT products_id, qty FROM sales where sale_at BETWEEN $1 AND $2',[dateStart, dateFinish]);
+
+    let acum = 0;
+    for (const sale of sales.rows) {
+        const product = await pool.query('SELECT price FROM products where id = $1',[sale.products_id]);
+        acum += parseInt(product.rows[0].price * sale.qty)
+    }
+    console.log(acum);
+    res.status(200).json({
+        date,
+        total: acum
+    });
 }
 
 const createSales = async(req, res) => {
@@ -50,6 +91,8 @@ const deletedSale = async(req, res) => {
 
 module.exports = {
     getSales,
+    getSalesToDate,
+    getSalesToMonth,
     createSales,
     updateSale,
     deletedSale
