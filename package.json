@@ -1,0 +1,28 @@
+{
+  "name": "3pimedios",
+  "version": "1.0.0",
+  "description": "Prueba técnica - 3 Pi medios",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maram-p/3pimedios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maram-p/3pimedios/issues"
+  },
+  "homepage": "https://github.com/maram-p/3pimedios#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.7.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
